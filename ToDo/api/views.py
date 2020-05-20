@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -7,7 +8,7 @@ from api.models import Task
 from api.serializers import TaskSerializer
 from api.models import User
 from api.serializers import LoginSerializer, RegistrationSerializer
-
+from api.tasks import send_email_task
 
 class RegistrationAPIView(APIView):
     permission_classes = [AllowAny]
@@ -74,6 +75,18 @@ class LogoutAPIView(APIView):
 class TaskList(generics.ListCreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+
+
 class TaskDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+
+class Execution(APIView):
+    queryset = Task.objects.all()
+    # serializer_class = TaskSerializer
+    def get(self,request):
+        send_email_task.delay()
+        res = {
+            'email': 'send'
+        }
+        return Response(res,status=status.HTTP_200_OK)

@@ -1,3 +1,3 @@
-from ToDo.celery import celery_app
+from ToDo.celery import app
 
-__all__ = ('celety_app')
+__all__ = ('app')
