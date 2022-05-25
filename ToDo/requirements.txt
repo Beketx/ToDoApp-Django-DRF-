@@ -8,7 +8,7 @@ djangorestframework==3.11.0
 djangorestframework-jwt==1.11.0
 djoser==2.0.3
 kombu==4.6.8
-PyJWT==1.7.1
+PyJWT==2.4.0
 pytz==2020.1
 redis==3.5.2
 sqlparse==0.3.1
